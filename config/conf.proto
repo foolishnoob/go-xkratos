@@ -1,12 +1,12 @@
 syntax = "proto3";
-package simple.config;
+package config;
 
 option go_package = "github.com/foolishnoob/go-xkratos/config;config";
 
 import "google/protobuf/duration.proto";
 
 message BootConfig {
-  string Environment = 1;//建议配置成：dev、product、local
+  string environment = 1;//建议配置成：dev、product、local
   Service service = 2;
   Server server = 3;
   Database database = 4;

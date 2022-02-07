@@ -2,9 +2,11 @@ package config
 
 import (
 	"flag"
+	"github.com/foolishnoob/go-xkratos/util/xdebug"
 	"github.com/go-kratos/kratos/v2/config"
 	"github.com/go-kratos/kratos/v2/config/file"
 	"github.com/google/uuid"
+	"github.com/pkg/errors"
 	"go.uber.org/dig"
 )
 
@@ -16,6 +18,15 @@ func Inject(container *dig.Container) {
 	_ = container.Provide(redisConfig)
 	_ = container.Provide(etcdConfig)
 	_ = container.Provide(traceConfig)
+
+	var env string
+	var err = container.Invoke(func(bootConfig *BootConfig) {
+		env = bootConfig.GetEnvironment()
+	})
+	if nil == err && "" == env {
+		err = errors.New("environment must be set!")
+	}
+	xdebug.IfPanic(err)
 }
 
 func bootConfig() *BootConfig {

@@ -17,6 +17,7 @@ require (
 	github.com/stretchr/testify v1.7.0
 	github.com/tidwall/gjson v1.13.0
 	github.com/tidwall/pretty v1.2.0
+	github.com/uptrace/opentelemetry-go-extra/otelgorm v0.1.8
 	go.etcd.io/etcd/client/v3 v3.5.1
 	go.opentelemetry.io/otel v1.3.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.3.0
