@@ -11,6 +11,7 @@ import (
 	"github.com/foolishnoob/go-xkratos/util/xdebug"
 	"github.com/go-kratos/kratos/v2"
 	kLog "github.com/go-kratos/kratos/v2/log"
+	"github.com/go-kratos/kratos/v2/transport"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 	"github.com/go-kratos/kratos/v2/transport/http"
 	"go.uber.org/dig"
@@ -89,18 +90,27 @@ func (app *application) Cache() cache.Cache {
 func (app *application) Run(httpServer *http.Server, rpcServer *grpc.Server) {
 	var kApp *kratos.App
 	var err = app.container.Invoke(func(rr registry.Register, serviceConf *config.Service, logger kLog.Logger) {
-		kApp = kratos.New(
+		var servers []transport.Server
+		if httpServer != nil {
+			servers = append(servers, httpServer)
+		}
+		if rpcServer != nil {
+			servers = append(servers, rpcServer)
+		}
+		var options = []kratos.Option{
 			kratos.ID(serviceConf.GetId()),
 			kratos.Name(serviceConf.GetName()),
 			kratos.Version(serviceConf.GetVersion()),
 			kratos.Metadata(map[string]string{}),
 			kratos.Logger(logger),
-			kratos.Server(
-				httpServer,
-				rpcServer,
-			),
-			kratos.Registrar(rr.GetInterface()),
-		)
+		}
+		if 0 < len(servers) {
+			options = append(options, kratos.Server(servers...))
+		}
+		if nil != rr.GetInterface() {
+			options = append(options, kratos.Registrar(rr.GetInterface()))
+		}
+		kApp = kratos.New(options...)
 	})
 	xdebug.IfPanic(err)
 	if err := kApp.Run(); err != nil {
