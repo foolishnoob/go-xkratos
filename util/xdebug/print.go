@@ -15,9 +15,9 @@
 package xdebug
 
 import (
-	"easyshop/common/util/xcolor"
-	"easyshop/common/util/xstring"
 	"fmt"
+	"github.com/foolishnoob/go-xkratos/util/xcolor"
+	"github.com/foolishnoob/go-xkratos/util/xstring"
 
 	"github.com/tidwall/pretty"
 )

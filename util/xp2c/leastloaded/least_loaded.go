@@ -15,7 +15,7 @@
 package leastloaded
 
 import (
-	"easyshop/common/util/xp2c"
+	"github.com/foolishnoob/go-xkratos/util/xp2c"
 	"math/rand"
 	"sync"
 	"sync/atomic"

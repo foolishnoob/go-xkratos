@@ -113,7 +113,7 @@ func (app *application) Run(httpServer *http.Server, rpcServer *grpc.Server) {
 		kApp = kratos.New(options...)
 	})
 	xdebug.IfPanic(err)
-	if err := kApp.Run(); err != nil {
+	if err = kApp.Run(); err != nil {
 		panic(err)
 	}
 }

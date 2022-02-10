@@ -15,7 +15,7 @@
 package leastloaded_test
 
 import (
-	"easyshop/common/util/xp2c/leastloaded"
+	"github.com/foolishnoob/go-xkratos/util/xp2c/leastloaded"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

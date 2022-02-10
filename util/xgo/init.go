@@ -15,7 +15,7 @@
 package xgo
 
 import (
-	"easyshop/common/util/xstring"
+	"github.com/foolishnoob/go-xkratos/util/xstring"
 	"fmt"
 	"runtime"
 

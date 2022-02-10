@@ -16,8 +16,13 @@ package xdebug
 
 import (
 	"bytes"
+	"fmt"
+	"github.com/davecgh/go-spew/spew"
 	"os"
+	"regexp"
 	"runtime"
+	"runtime/debug"
+	"strings"
 )
 
 // PanicTrace trace panic stack info.
@@ -63,4 +68,16 @@ func DumpPanicTrace(kb int) {
 		stack = stack[:end]
 	}
 	_, _ = os.Stdout.Write(bytes.TrimRight(stack, "\n"))
+}
+
+func Dump(a ...interface{}) {
+	stacks := strings.Split(string(debug.Stack()), "\n\t")
+	coroutineRegexp, _ := regexp.Compile("(goroutine \\d+ )")
+	matchesCoroutines := coroutineRegexp.FindStringSubmatch(stacks[0])
+
+	pathRegexp, _ := regexp.Compile("(.*\\.go:\\d+ )")
+	matchesPaths := pathRegexp.FindStringSubmatch(stacks[3])
+
+	fmt.Printf("%s : %s\n", matchesCoroutines[0], matchesPaths[0])
+	spew.Dump(a...)
 }

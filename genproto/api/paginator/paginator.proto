@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package xkratos.api.paginator;
+
+import "validate/validate.proto";
+
+option go_package = "github.com/foolishnoob/go-xkratos/genproto/api/paginator;paginator";
+
+message PaginatorReq{
+  int64 per_page = 1 [(validate.rules).int64 = {gt: 0}];//每页多少条记录
+  int64 current_page = 2 [(validate.rules).int64 = {gt: 0}];//当前第几页
+  string order = 3 [(validate.rules).string = {ignore_empty: true,min_len: 1, max_len: 20}];//排序
+}
+
+message PaginatorReply{
+  int64 items_count = 1;//总共多少条数据
+  int64 pages_count = 2;//总共多少页
+}

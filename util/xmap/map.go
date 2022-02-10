@@ -15,7 +15,7 @@
 package xmap
 
 import (
-	"easyshop/common/util/xcast"
+	"github.com/foolishnoob/go-xkratos/util/xcast"
 	"fmt"
 	"reflect"
 	"strings"

@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package xkratos.api.xerrors;
+
+import "errors/errors.proto";
+
+option go_package = "github.com/foolishnoob/go-xkratos/genproto/api/xerrors;xerrors";
+option java_multiple_files = true;
+
+enum ErrorReason {
+  option (errors.default_code) = 500;
+
+  NOT_FOUND = 0 [(errors.code) = 404];
+  INVALID_PARAMETER = 1 [(errors.code) = 500];
+}

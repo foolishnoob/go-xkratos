@@ -5,6 +5,7 @@ go 1.16
 require (
 	github.com/codegangsta/inject v0.0.0-20150114235600-33e0aa1cb7c0
 	github.com/davecgh/go-spew v1.1.1
+	github.com/envoyproxy/protoc-gen-validate v0.1.0
 	github.com/go-kratos/etcd v0.1.3
 	github.com/go-kratos/kratos/contrib/log/aliyun/v2 v2.0.0-20220131005031-86b8b6c366b9
 	github.com/go-kratos/kratos/v2 v2.1.5

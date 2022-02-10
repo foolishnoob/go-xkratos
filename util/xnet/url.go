@@ -15,7 +15,7 @@
 package xnet
 
 import (
-	"easyshop/common/util/xcast"
+	"github.com/foolishnoob/go-xkratos/util/xcast"
 	"net/url"
 	"time"
 

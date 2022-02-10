@@ -15,10 +15,10 @@
 package xdebug
 
 import (
-	"easyshop/common/util/xcolor"
-	"easyshop/common/util/xstring"
 	"flag"
 	"fmt"
+	"github.com/foolishnoob/go-xkratos/util/xcolor"
+	"github.com/foolishnoob/go-xkratos/util/xstring"
 	"os"
 	"path/filepath"
 	"strings"
