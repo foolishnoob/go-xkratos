@@ -117,3 +117,14 @@ func (app *application) Run(httpServer *http.Server, rpcServer *grpc.Server) {
 		panic(err)
 	}
 }
+
+func (app *application) Stop() {
+	app.container.Invoke(func(db database.Database) {
+		if nil == db {
+			return
+		}
+		if conn, err := db.GetInstance().DB(); nil != err {
+			conn.Close()
+		}
+	})
+}
