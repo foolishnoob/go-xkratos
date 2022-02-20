@@ -3,6 +3,7 @@ module github.com/foolishnoob/go-xkratos
 go 1.16
 
 require (
+	github.com/asaskevich/EventBus v0.0.0-20200907212545-49d423059eef
 	github.com/codegangsta/inject v0.0.0-20150114235600-33e0aa1cb7c0
 	github.com/davecgh/go-spew v1.1.1
 	github.com/envoyproxy/protoc-gen-validate v0.1.0

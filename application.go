@@ -1,6 +1,7 @@
 package xkratos
 
 import (
+	"github.com/asaskevich/EventBus"
 	"github.com/foolishnoob/go-xkratos/components/cache"
 	"github.com/foolishnoob/go-xkratos/components/database"
 	"github.com/foolishnoob/go-xkratos/components/log"
@@ -37,11 +38,13 @@ func Application() *application {
 		tracer.Inject(App.container)
 
 		_ = App.container.Provide(database.NewDatabase)
+		_ = App.container.Provide(database.NewDatabase)
 		_ = App.container.Provide(cache.NewCache)
 		_ = App.container.Provide(registry.NewDiscovery)
 		_ = App.container.Provide(registry.NewRegistrar)
 		_ = App.container.Provide(server.NewHTTPServer)
 		_ = App.container.Provide(server.NewGRPCServer)
+		_ = App.container.Provide(EventBus.New)
 	}
 	once.Do(initialize)
 	return App
@@ -87,6 +90,15 @@ func (app *application) Cache() cache.Cache {
 	return conn
 }
 
+func (app *application) EventBus() *EventBus.EventBus {
+	var eventBus *EventBus.EventBus
+	var err = app.container.Invoke(func(obj *EventBus.EventBus) {
+		eventBus = obj
+	})
+	xdebug.IfPanic(err)
+	return eventBus
+}
+
 func (app *application) Run(httpServer *http.Server, rpcServer *grpc.Server) {
 	var kApp *kratos.App
 	var err = app.container.Invoke(func(rr registry.Register, serviceConf *config.Service, logger kLog.Logger) {
@@ -119,12 +131,12 @@ func (app *application) Run(httpServer *http.Server, rpcServer *grpc.Server) {
 }
 
 func (app *application) Stop() {
-	app.container.Invoke(func(db database.Database) {
+	_ = app.container.Invoke(func(db database.Database) {
 		if nil == db {
 			return
 		}
 		if conn, err := db.GetInstance().DB(); nil != err {
-			conn.Close()
+			_ = conn.Close()
 		}
 	})
 }
