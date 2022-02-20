@@ -90,9 +90,9 @@ func (app *application) Cache() cache.Cache {
 	return conn
 }
 
-func (app *application) EventBus() *EventBus.EventBus {
-	var eventBus *EventBus.EventBus
-	var err = app.container.Invoke(func(obj *EventBus.EventBus) {
+func (app *application) EventBus() EventBus.Bus {
+	var eventBus EventBus.Bus
+	var err = app.container.Invoke(func(obj EventBus.Bus) {
 		eventBus = obj
 	})
 	xdebug.IfPanic(err)
